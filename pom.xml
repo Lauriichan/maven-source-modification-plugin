@@ -10,6 +10,12 @@
         <project.maven.plugin.version>3.8.2</project.maven.plugin.version>
         <project.roaster.version>2.28.0.Final</project.roaster.version>
     </properties>
+    <licenses>
+        <license>
+            <name>Apache-2.0 License</name>
+            <url>https://github.com/Lauriichan/maven-source-modification-plugin/blob/master/LICENSE</url>
+        </license>
+    </licenses>
     <dependencies>
         <!-- Fast Util -->
         <dependency>
