@@ -16,6 +16,14 @@
             <url>https://github.com/Lauriichan/maven-source-modification-plugin/blob/master/LICENSE</url>
         </license>
     </licenses>
+    <url>https://github.com/Lauriichan/maven-source-modification-plugin</url>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub OWNER Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/Lauriichan/maven-source-modification-plugin</url>
+        </repository>
+    </distributionManagement>
     <dependencies>
         <!-- Fast Util -->
         <dependency>
