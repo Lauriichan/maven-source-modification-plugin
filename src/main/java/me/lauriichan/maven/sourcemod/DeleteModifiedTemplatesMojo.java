@@ -66,6 +66,7 @@ public class DeleteModifiedTemplatesMojo extends AbstractMojo {
                     }
                 }
                 getLog().info("Deleting '" + sourceFile.relativePath() + "'");
+                amount++;
                 forceDelete(file);
             }
             getLog().info("Deleted " + amount + " source(s)!");
