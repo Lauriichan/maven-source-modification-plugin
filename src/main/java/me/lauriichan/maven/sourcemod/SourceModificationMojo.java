@@ -111,26 +111,29 @@ public class SourceModificationMojo extends AbstractMojo {
                     }
                     transformer.transform(javaSource);
                 }
-                if (modified) {
-                    outputName = resolveOutputName(source.relativePath());
-                    originalOutputName = outputName;
-                    for (ReplacementConfiguration replacement : replacements) {
-                        if (replacement.getPattern().isBlank()) {
-                            continue;
-                        }
-                        outputName = replacement.isRegex()
-                            ? replacePattern(outputName, replacement.getCompiledPattern(), replacement.getReplace())
-                            : outputName.replace(replacement.getPattern(), replacement.getReplace());
+                outputName = resolveOutputName(source.relativePath());
+                originalOutputName = outputName;
+                for (ReplacementConfiguration replacement : replacements) {
+                    if (replacement.getPattern().isBlank()) {
+                        continue;
                     }
-                    if (!outputName.equals(originalOutputName)) {
-                        getLog().info("Renaming from '" + originalOutputName + "' to '" + outputName + "'");
-                    }
+                    outputName = replacement.isRegex()
+                        ? replacePattern(outputName, replacement.getCompiledPattern(), replacement.getReplace())
+                        : outputName.replace(replacement.getPattern(), replacement.getReplace());
+                }
+                boolean renamed = !outputName.equals(originalOutputName);
+                if (modified && !javaSource.getPackage().equals(sourcePackage)) {
+                    javaSource.setPackage(sourcePackage);
+                }
+                if (renamed) {
+                    getLog().info("Renaming from '" + originalOutputName + "' to '" + outputName + "'");
+                    javaSource.setName(sanatizeName(outputName));
+                }
+                if (modified || renamed) {
                     output = new File(outputDirectory, resolvePathWithoutName(source.relativePath()) + outputName);
                     createFile(output);
-                    javaSource.setPackage(sourcePackage);
-                    javaSource.setName(sanatizeName(outputName));
                     try (FileWriter writer = new FileWriter(output)) {
-                        writer.write(javaSource.toString());
+                        writer.write(fixJBossRename(javaSource.toString(), renamed, originalOutputName, outputName));
                     }
                 } else if (copyUnmodifiedFiles) {
                     output = new File(outputDirectory, source.relativePath());
@@ -144,6 +147,15 @@ public class SourceModificationMojo extends AbstractMojo {
         } finally {
             Thread.currentThread().setContextClassLoader(originalLoader);
         }
+    }
+    
+    private String fixJBossRename(String javaSource, boolean renamed, String originalName, String newName) {
+        if (!renamed) {
+            return javaSource;
+        }
+        originalName = sanatizeName(originalName);
+        newName = sanatizeName(newName);
+        return javaSource.replaceAll("\\b%s\\b".formatted(Pattern.quote(originalName)), newName);
     }
 
     private void createFile(File file) throws IOException {
@@ -270,7 +282,7 @@ public class SourceModificationMojo extends AbstractMojo {
         }
         return path.substring(index + 1);
     }
-    
+
     private String sanatizeName(final String name) {
         String[] parts = name.split("\\.", 2);
         if (parts.length != 2) {
