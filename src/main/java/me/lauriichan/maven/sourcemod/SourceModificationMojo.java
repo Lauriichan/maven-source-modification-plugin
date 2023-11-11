@@ -155,7 +155,7 @@ public class SourceModificationMojo extends AbstractMojo {
         }
         originalName = sanatizeName(originalName);
         newName = sanatizeName(newName);
-        return javaSource.replaceAll("\\b%s\\b".formatted(Pattern.quote(originalName)), newName);
+        return javaSource.replaceAll(String.format("\\b%s\\b", Pattern.quote(originalName)), newName);
     }
 
     private void createFile(File file) throws IOException {
