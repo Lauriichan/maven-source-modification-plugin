@@ -157,7 +157,7 @@ final class SourcePackageImpl extends SourcePackage {
      */
 
     private void add(JavaSource<?> source) {
-        if (root != null) {
+        if (!isRoot()) {
             root.add(source);
             return;
         }
