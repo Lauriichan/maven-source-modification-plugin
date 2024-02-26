@@ -5,8 +5,8 @@
     <version>2.0.0</version>
     <packaging>maven-plugin</packaging>
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.maven.plugin.version>3.8.2</project.maven.plugin.version>
         <project.roaster.version>2.29.0.Final</project.roaster.version>
     </properties>
