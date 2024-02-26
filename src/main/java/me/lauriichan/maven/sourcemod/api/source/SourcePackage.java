@@ -114,4 +114,8 @@ public abstract class SourcePackage implements Iterable<JavaSource<?>> {
         return createSource(JavaAnnotationSource.class, name);
     }
 
+    public final JavaEnumSource createEnum(String name) throws IllegalStateException {
+        return createSource(JavaEnumSource.class, name);
+    }
+
 }
