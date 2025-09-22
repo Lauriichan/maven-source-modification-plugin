@@ -17,13 +17,18 @@
         </license>
     </licenses>
     <url>https://github.com/Lauriichan/maven-source-modification-plugin</url>
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/Lauriichan/maven-source-modification-plugin</url>
-        </repository>
-    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <distributionManagement>
+                <repository>
+                    <id>lauriichan</id>
+                    <name>Lauriichan Maven Repository (Release)</name>
+                    <url>https://maven.lauriichan.me/release</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
     <dependencies>
         <!-- Fast Util -->
         <dependency>
