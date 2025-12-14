@@ -2,13 +2,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.lauriichan.maven</groupId>
     <artifactId>maven-source-modification-plugin</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.0</version>
     <packaging>maven-plugin</packaging>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.maven.plugin.version>3.8.2</project.maven.plugin.version>
-        <project.roaster.version>2.29.0.Final</project.roaster.version>
+        <project.roaster.version>2.30.3.Final</project.roaster.version>
     </properties>
     <licenses>
         <license>
